@@ -40,6 +40,16 @@ public class App
         superExtendedWorkoutUnit.workout( 30 );
         superExtendedWorkoutUnit.workout( 30 );
 
+        System.out.println( "<<TESTING>>" );
+        DoublyLinkedList list = new DoublyLinkedList();
+
+        list.add( basicWorkoutUnit );
+        list.add( basicWorkoutUnit );
+        list.add( basicWorkoutUnit );
+        list.add( basicWorkoutUnit );
+        list.add( basicWorkoutUnit );
+        System.out.println( list );
+        System.out.println( list.getSize() );
 
 
     }

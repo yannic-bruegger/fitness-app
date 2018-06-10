@@ -41,7 +41,7 @@ public class App
         WorkoutUnit wu = new WorkoutUnit( 0, new Date(), f2 );
         while(!wu.archivedGoal(800))
         {
-            wu.workout(5);
+            wu.workoutUnit(5);
 
             System.out.println( "ZEIT: " + wu.getDurationInMinutes()  + " KALORIEN: " + wu.burntCalories() );
         }
