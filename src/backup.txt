@@ -1,0 +1,99 @@
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Date;
+
+public class App
+{
+    public static void main( String[] args )
+    {
+        System.out.println( "FitnessApp has been started." );
+        GroupOfMuscles gom = new GroupOfMuscles();
+        gom.setNameOfGroup( "Oberkörper" );
+        ArrayList<String> li = new ArrayList<String>();
+        li.add("Rückenmuskulatur");
+        li.add("Brustmuskulatur");
+        li.add("Bizeps");
+        li.add("Trizeps");
+        gom.setMuscleList( li );
+        FitnessDevice f1 = new FitnessDevice();
+        f1.setDeviceName( "Anlage1" );
+        FitnessDevice f2 = new FitnessDevice( "Device2", DeviceType.CARDIO, gom, 20, 900, false );
+        f2.setDeviceName( "Anlage2" );
+
+        /* LIVEAUFGABE */
+        GroupOfMuscles gom2 = new GroupOfMuscles();
+        gom.setNameOfGroup( "Oberer Rücken" );
+        ArrayList<String> li2 = new ArrayList<String>();
+        li2.add( "Rhomboid Major" );
+        li2.add( "Rhomboid Minor" );
+        li2.add( "Trapez-Muskel" );
+        gom2.setMuscleList( li2 );
+        FitnessDevice liveDevice = new FitnessDevice( "Rückentrainer", DeviceType.CARDIO, gom2, 20, 950, true);
+
+        //  int durationInMinutes, Date startDateTime, FitnessDevice fitnessDevice
+        WorkoutUnit wu2 = new WorkoutUnit( liveDevice );
+        System.out.println( "LIVE AUFGABE: " + wu2.calculateRequiredWorkoutTime( 500 ) );
+
+
+
+        System.out.println( f2.getDeviceName() + " ist " + ( f2.isElectronicDevice() ? "k" : "" ) + "ein elektronisches Device." );
+
+        WorkoutUnit wu = new WorkoutUnit( 0, new Date(), f2 );
+        while(!wu.archivedGoal(800))
+        {
+            wu.workout(5);
+
+            System.out.println( "ZEIT: " + wu.getDurationInMinutes()  + " KALORIEN: " + wu.burntCalories() );
+        }
+
+        System.out.println( "Nach " + wu.getDurationInMinutes() + " Minuten Training hat Yannic " + wu.burntCalories() + " Kalorien verbrannt. HGW!"  );
+    }
+}
+
+#######################################################################
+
+import java.util.ArrayList;
+
+public class App
+{
+    public static void main( String[] args )
+    {
+        System.out.println( "FitnessApp has been started." );
+
+        ArrayList<String> li1 = new ArrayList<String>();
+        li1.add("Rückenmuskulatur");
+        li1.add("Brustmuskulatur");
+        li1.add("Bizeps");
+        li1.add("Trizeps");
+
+        ArrayList<String> li2 = new ArrayList<String>();
+        li2.add( "Rhomboid Major" );
+        li2.add( "Rhomboid Minor" );
+        li2.add( "Trapez-Muskel" );
+
+        GroupOfMuscles gom = new GroupOfMuscles( "Oberkörper", li1 );
+        GroupOfMuscles gom2 = new GroupOfMuscles( "Oberer Rücken", li2 );
+
+        FitnessDevice f1 = new FitnessDevice();
+        FitnessDevice f2 = new FitnessDevice( "Device2", DeviceType.CARDIO, gom, 20, 900, false );
+        FitnessDevice f3 = new FitnessDevice( "Device3", DeviceType.CARDIO, gom, 20, 7000, false );
+        FitnessDevice f4 = new FitnessDevice( "Device4", DeviceType.CARDIO, gom, 20, 800, false );
+        FitnessDevice f5 = new FitnessDevice( "Rückentrainer", DeviceType.CARDIO, gom2, 20, 900, true);
+
+        ArrayList<FitnessDevice> deviceList = new ArrayList<>();
+        deviceList.add( f1 );
+        deviceList.add( f2 );
+        deviceList.add( f3 );
+        deviceList.add( f4 );
+        deviceList.add( f5 );
+
+
+        /* BONUSAUFGABE */
+        FitnessDevice theFittest = deviceList.get( 0 );
+        for( int c = 1; c < deviceList.size(); c++ )
+        {
+            if( deviceList.get( c ).getBurntCaloriesEachHour() > theFittest.getBurntCaloriesEachHour() ) theFittest = deviceList.get( c );
+        }
+        System.out.println( theFittest.getDeviceName() + " hat den höchsten Kalorienverbrauch!" );
+    }
+}
