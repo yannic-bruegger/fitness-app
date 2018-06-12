@@ -1,3 +1,6 @@
+import java.util.NoSuchElementException;
+
+
 public class DoublyLinkedList
 {
     Node currentNode = null;
@@ -17,53 +20,53 @@ public class DoublyLinkedList
         Node newNode = new Node( newWorkoutUnit, currentNode, currentNode.getNext() );
         newNode.getPrev().setNext( newNode ); // = currentNode.setNext( newNode );
         newNode.getNext().setPrev( newNode );
+        currentNode = newNode;
         sizeCounter++;
-    }
-
-    void removeCurrentNode()
-    {
-        if( isEmpty() ) return;
-
-        Node prev = currentNode.getPrev();
-        Node next = currentNode.getNext();
-        prev.setNext( next );
-        next.setPrev( prev );
-        currentNode = prev;
-        sizeCounter--;
     }
 
     void remove( int offset )
     {
-        if( isEmpty() ) return;
+        if( isEmpty() ) throw new NoSuchElementException();
+        if( getSize() == 1  )
+        {
+            currentNode = null;
+            sizeCounter = 0;
+            return;
+        }
 
         Node toDelete = currentNode;
-
         for( int c = 0; c < offset; c++ )
         {
             toDelete = toDelete.getNext();
         }
+        toDelete.next.prev = toDelete.prev;
+        toDelete.prev = toDelete.next;
         sizeCounter--;
     }
 
     public WorkoutUnit getCurrent()
     {
+        if( isEmpty() ) throw new NoSuchElementException();
         return  currentNode.getWorkoutUnit();
     }
 
     public WorkoutUnit next()
     {
+        if( isEmpty() ) throw new NoSuchElementException();
         currentNode = currentNode.getNext();
         return currentNode.getWorkoutUnit();
     }
 
     public WorkoutUnit prev()
     {
+        if( isEmpty() ) throw new NoSuchElementException();
         currentNode = currentNode.getPrev();
         return currentNode.getWorkoutUnit();
     }
 
     public WorkoutUnit get( int offset )
     {
+        if( isEmpty() ) throw new NoSuchElementException();
         Node counterNode = currentNode;
         for( int c = 0; c < offset; c++ ) counterNode = counterNode.next;
         return counterNode.getWorkoutUnit();

@@ -6,7 +6,7 @@ public class GroupOfMuscles
     private ArrayList< String > muscleList;
 
     public GroupOfMuscles() {
-        this( "", new ArrayList<>() );
+        this( "", new ArrayList<String>() );
     }
 
     public GroupOfMuscles(String nameOfGroup, ArrayList<String> muscleList) {
